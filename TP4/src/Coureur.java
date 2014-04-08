@@ -44,3 +44,4 @@ public class Coureur {
 	   Terminal.ecrireStringln(this.toString());
    }
 }
+
