@@ -20,23 +20,24 @@ public class Coureur {
    * 2 s'il est deja dans les arrives
    * 3 s'il a deja abandonne
    * 4 s'il est deja disqualifie
+ * @throws ExceptionDejaArrive 
+ * @throws ExceptionDejaAbandon 
+ * @throws ExceptionDejaDisqual 
    **/
-   public int changeStatus(Statut s) {
-	   int err = 0; 
+   public void changeStatus(Statut s) throws ExceptionDejaArrive, ExceptionDejaAbandon, ExceptionDejaDisqual {
 	   if (this.getStatus() == Statut.Arrive) {
 			if (s == Statut.Disqualification) { 
 				this.stat = s;
 			} else {
-				err = 2; // deja arrive
+				throw new ExceptionDejaArrive();
 			}
 		} else if (this.getStatus() == Statut.Abandon)  {
-			err = 3; // deja abandonne
+			throw new ExceptionDejaAbandon();
 		} else if (this.getStatus() == Statut.Disqualification) {
-			err = 4; // deja disqualifie
+			throw new ExceptionDejaDisqual();
 		} else if (this.stat == Statut.DansCourse){
 			this.stat = s;
 		}
-		return err;
    }
    public String toString() { return ("   No."+ numDossard + ": "+ nom + ", status: "+ stat);}
    
@@ -45,3 +46,6 @@ public class Coureur {
    }
 }
 
+class ExceptionDejaArrive extends Exception{}
+class ExceptionDejaAbandon extends Exception{}
+class ExceptionDejaDisqual extends Exception{}

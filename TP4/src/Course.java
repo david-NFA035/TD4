@@ -32,29 +32,60 @@ public class Course {
      * 3 s'il a deja abandonne
      * 4 s'il est deja disqualifie
      **/
-    public int enregistreArrivee(int nd){
-    	int codeErr = participants.get(nd-1).changeStatus(Statut.Arrive);
-    	if (codeErr ==0) {
-    		arrives.add(participants.get(nd-1));
+    public void enregistreArrivee(int nd){
+    	try{
+    	    participants.get(nd-1).changeStatus(Statut.Arrive);
+    	    arrives.add(participants.get(nd-1));
+    	}catch (Exception e){
+    		if (e instanceof ExceptionDejaArrive){
+    		    afficheErreur(2, nd, "classement");
+    	    }
+    		else if (e instanceof ExceptionDejaAbandon){
+		        afficheErreur(3, nd, "classement");
+	        }
+    		else if (e instanceof ExceptionDejaDisqual){
+	            afficheErreur(4, nd, "classement");
+            }
     	}
-    	return codeErr;
     }
   
     /** Enregistre abandon pour le dossard @param nd
      * pre: Suppose que le numero @param nd correspond a un dossard valide.
      * @return code d'erreur  si abandon impossible.
      */
-    public int enregistreAbandon(int nd){
-    	int codeErr = participants.get(nd-1).changeStatus(Statut.Abandon);
-    	return codeErr; // 0 ou 3
+    public void enregistreAbandon(int nd){
+    	try{
+    	    participants.get(nd-1).changeStatus(Statut.Abandon);
+    	}catch (Exception e){
+    		if (e instanceof ExceptionDejaArrive){
+    		    afficheErreur(2, nd, "abandon");
+    	    }
+    		else if (e instanceof ExceptionDejaAbandon){
+		        afficheErreur(3, nd, "abandon");
+	        }
+    		else if (e instanceof ExceptionDejaDisqual){
+	            afficheErreur(4, nd, "abandon");
+            }
+    	}
     }
     /** Enregistre disqualification dossard @param nd.
      * pre: @param nd numero de dossard valide.
      * @return code d'erreur si disqualification impossible.
      **/
-    public int enregistreDisqual(int nd){
-    	int codeErr = participants.get(nd-1).changeStatus(Statut.Disqualification);
-    	return codeErr; // 0 ou 4
+    public void enregistreDisqual(int nd){
+    	try{
+    	    participants.get(nd-1).changeStatus(Statut.Disqualification);
+    	}catch (Exception e){
+    		if (e instanceof ExceptionDejaArrive){
+    		    afficheErreur(2, nd, "disqualification");
+    	    }
+    		else if (e instanceof ExceptionDejaAbandon){
+		        afficheErreur(3, nd, "disqualification");
+	        }
+    		else if (e instanceof ExceptionDejaDisqual){
+	            afficheErreur(4, nd, "disqualification");
+            }
+    	}
     }
   
     /****   Operations d'affichage *****/
@@ -120,5 +151,16 @@ public class Course {
     public void afficheGagnant(){
     	// Remplacer le throw par votre code!!!
     	throw new Error("Remplacer ce throw par votre implantation.");
+    }
+    
+    /** Affiche message d'erreur 
+     * selon @param code 
+     * avec numero dossard @param nd
+     * et nom d'operation erronee @param op */
+    public static void afficheErreur(int code, int nd, String op){
+  	  String [] erreur = {"", "Dossard invalide.", "coureur deja arrive", "coureur ayant abandonne", 
+	  "coureur deja disqualifie"};
+  	  if (code != 0) 
+  		  Terminal.ecrireStringln("Dossard no." + nd + " => "+ op + " impossible: " + erreur[code]);
     }
 }
