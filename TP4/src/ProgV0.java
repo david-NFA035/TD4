@@ -27,12 +27,36 @@ public class ProgV0 {
 		c.opInscritCoureur("A");
 		c.opInscritCoureur("B");
 		c.opInscritCoureur("C");
+		c.opInscritCoureur("D");
+		c.opInscritCoureur("E");
+		c.opInscritCoureur("F");
+		c.opInscritCoureur("G");
+		c.opInscritCoureur("H");
+		c.opInscritCoureur("I");
+		c.opInscritCoureur("J");
 	
 		c.afficheParticipants();
+		c.enregistreArrivee(3);
 		afficheErreur(c.enregistreArrivee(3), 3, "Classement");	
 		c.afficheParticipants();
-		afficheErreur(c.enregistreArrivee(3), 3, "Classement");	
+		c.enregistreAbandon(2);
+		afficheErreur(c.enregistreArrivee(2), 2, "Classement");
+		afficheErreur(c.enregistreDisqual(2), 2, "Disqualification");
+		c.enregistreArrivee(3);
+		c.enregistreDisqual(3);
+		afficheErreur(c.enregistreDisqual(3), 3, "Disqualification");
+		afficheErreur(c.enregistreAbandon(3), 3, "Abandon");
+		c.enregistreArrivee(4);
+		c.enregistreAbandon(8);
+		c.enregistreDisqual(6);
+		afficheErreur(c.enregistreArrivee(6), 6, "Classement");
+		afficheErreur(c.enregistreAbandon(8), 8, "Abandon");
 	    c.afficheParticipants();
+	    
+	    c.afficheClasses();
+	    c.afficheAbandons();
+	    c.afficheDisqualifications();
+	    
 	
 	}
 

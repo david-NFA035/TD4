@@ -34,7 +34,7 @@ public class Coureur {
 		} else if (this.getStatus() == Statut.Disqualification) {
 			err = 4; // deja disqualifie
 		} else if (this.stat == Statut.DansCourse){
-			stat = s;
+			this.stat = s;
 		}
 		return err;
    }

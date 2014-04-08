@@ -45,16 +45,16 @@ public class Course {
      * @return code d'erreur  si abandon impossible.
      */
     public int enregistreAbandon(int nd){
-    	// A modifier
-    	return 0;
+    	int codeErr = participants.get(nd-1).changeStatus(Statut.Abandon);
+    	return codeErr; // 0 ou 3
     }
     /** Enregistre disqualification dossard @param nd.
      * pre: @param nd numero de dossard valide.
      * @return code d'erreur si disqualification impossible.
      **/
     public int enregistreDisqual(int nd){
-      	// A modifier
-    	return 0;
+    	int codeErr = participants.get(nd-1).changeStatus(Statut.Disqualification);
+    	return codeErr; // 0 ou 4
     }
   
     /****   Operations d'affichage *****/
@@ -88,23 +88,36 @@ public class Course {
     }
     /** Affiche la liste de coureurs classes */
     public void afficheClasses(){
-    	// Remplacer le throw par votre code!!!
-    	throw new Error("Remplacer ce throw par votre implantation.");
+    	System.out.println("\nListe des coureurs classes :\n");
+    	for(Coureur c : arrives){// ou "for(Coureur c : participants){" : le resultat est le meme
+    		if (c.getStatus() == Statut.Arrive){
+    			c.affiche();
+    		}
+    	}
     }
     /** Affiche la liste de coureurs ayant abandonne */
     public void afficheAbandons(){
-    	// Remplacer le throw par votre code!!!
-    	throw new Error("Remplacer ce throw par votre implantation.");
+    	System.out.println("\nListe des coureurs ayant abandonne :\n");
+    	for(Coureur c : participants){
+    		if (c.getStatus() == Statut.Abandon){
+    			c.affiche();
+    		}
+    	}
     }
+    
     /** Affiche la liste de coureurs disqualifies */
     public void afficheDisqualifications(){
-    	// Remplacer le throw par votre code!!!
-    	throw new Error("Remplacer ce throw par votre implantation.");
+    	System.out.println("\nListe des coureurs disqualifies :\n");
+    	for(Coureur c : participants){
+    		if (c.getStatus() == Statut.Disqualification){
+    			c.affiche();
+    		}
+    	}
     }
-    /** Affiche le ganant (s'y il en a un)
+    /** Affiche le gagnant (s'y il en a un)
      * ou un message si pas de gagnant 
      */
-    public void afficheGagant(){
+    public void afficheGagnant(){
     	// Remplacer le throw par votre code!!!
     	throw new Error("Remplacer ce throw par votre implantation.");
     }
